@@ -6,7 +6,9 @@ namespace _11.Feb._2013_Task2.SpecialValue
     class Program
     {
         static void Main(string[] args)
-        {
+        {  //condition & BGCoder: http://bgcoder.com/Contests/55/CSharp-Part-2-2012-2013-11-Feb-2013
+           //video: https://www.youtube.com/watch?v=AbGGyyod_SA&t=2560s
+
             //input
             int n = int.Parse(Console.ReadLine());
             int[][] matrix = new int[n][];

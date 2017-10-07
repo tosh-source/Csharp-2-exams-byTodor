@@ -9,8 +9,10 @@ namespace _11.feb._2013_9GagNumbers
         //ако направя версия за Java да използвам това вместо константа -> Collections.unmodifiableList(Arrays.asList(yourOldArray)) 
 
         static void Main(string[] args)
-        {
-            //input
+        {  //condition & BGCoder: http://bgcoder.com/Contests/55/CSharp-Part-2-2012-2013-11-Feb-2013
+           //video: https://www.youtube.com/watch?v=AbGGyyod_SA&t=
+
+           //input
             string input = Console.ReadLine();
             //parse digits
             string valueHolder = string.Empty;
