@@ -37,7 +37,7 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
                 {
 
                 }
-                if (inputData.IndexOf(lowerTagClose, index) //check and manipulate "lower tag"
+                if (inputData.IndexOf(lowerTagClose, ) //check and manipulate "lower tag"
                 {
 
                 }
