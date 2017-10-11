@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11.feb.2013-9GagNumbers", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11.Feb.2013-Task2.SpecialValue", "11.Feb.2013-Task2.SpecialValue\11.Feb.2013-Task2.SpecialValue.csproj", "{B9669194-9CE6-439A-8B1C-8590DF03BE45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11.Feb.2013-Task4.FakeTextMarkupLanguage", "11.Feb.2013-Task4.FakeTextMarkupLanguage\11.Feb.2013-Task4.FakeTextMarkupLanguage.csproj", "{99BC8BA1-B3BA-4BD9-A8FF-076D52CCEC44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{B9669194-9CE6-439A-8B1C-8590DF03BE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9669194-9CE6-439A-8B1C-8590DF03BE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9669194-9CE6-439A-8B1C-8590DF03BE45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99BC8BA1-B3BA-4BD9-A8FF-076D52CCEC44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99BC8BA1-B3BA-4BD9-A8FF-076D52CCEC44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99BC8BA1-B3BA-4BD9-A8FF-076D52CCEC44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99BC8BA1-B3BA-4BD9-A8FF-076D52CCEC44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
