@@ -24,23 +24,25 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
 
             //input
             short numberOfLines = short.Parse(Console.ReadLine());
-            string inputData = Console.ReadLine();
+            string inputData = Console.ReadLine(); //трябва да го направя в масив защото, ще се подават мн редове
 
             //calculation
             List<string> tempOutput = new List<string>();
-            int index = -1;
+			int openIndex = 0;
+			int closeIndex = -1;
             string output = string.Empty;
 
             for (int i = 0; i < inputData.Length; i++)
             {
-                if (inputData.IndexOf(upperTagClose, index) != -1) //check and manipulate "upper tag"
+				if (inputData.IndexOf(upperTagClose, (closeIndex + 1)) != -1) //check and manipulate "upper tag"
                 {
-
+					closeIndex = inputData.IndexOf(upperTagClose, (closeIndex + 1));
+					openIndex = inputData.IndexOf(upperTagOpen);
                 }
-                if (inputData.IndexOf(lowerTagClose, ) //check and manipulate "lower tag"
-                {
+                //if (inputdata.indexof(lowertagclose, ) //check and manipulate "lower tag"
+                //{
 
-                }
+                //}
                 if (true) //check and manipulate "rev tag"
                 {
 
@@ -49,7 +51,7 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
                 {
 
                 }
-                index = -1;
+                closeIndex = -1;
             }
         }
     }
