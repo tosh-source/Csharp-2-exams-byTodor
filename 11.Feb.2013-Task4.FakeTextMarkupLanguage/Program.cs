@@ -8,16 +8,8 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
 {
     class Program
     {
-        private const string upperTagOpen = "<upper>";
-        private const string upperTagClose = "</upper>";
-        private const string lowerTagOpen = "<lower>";
-        private const string lowerTagClose = "</lower>";
-        private const string revTagOpen = "<rev>";
-        private const string revTagClose = "</rev>";
-        private const string toggleTagOpen = "<toggle>";
-        private const string toggleTagClose = "</toggle>";
-        private const string delTagOpen = "<del>";
-        private const string delTagClose = "</del>";
+        private static string[] openedTags = { "<upper>", "<lower>", "<rev>", "<toggle>", "<del>" };
+        private static string[] closedTags = { "</upper>", "</lower>", "</rev>", "</toggle>", "</del>" };
 
         static void Main(string[] args)
         { //condition & BGCoder: http://bgcoder.com/Contests/55/CSharp-Part-2-2012-2013-11-Feb-2013
@@ -27,33 +19,35 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
             string inputData = Console.ReadLine(); //трябва да го направя в масив защото, ще се подават мн редове
 
             //calculation
-            List<string> tempOutput = new List<string>();
-			int openIndex = 0;
-			int closeIndex = -1;
+            int currentCloseIndex = -1;
+            int tempIndex = -1;
+            int deepestOpenIndex = -1;
+            int deepestCloseIndex = -1;
+            int deepestTag = 0;
+
             string output = string.Empty;
 
             for (int i = 0; i < inputData.Length; i++)
             {
-				if (inputData.IndexOf(upperTagClose, (closeIndex + 1)) != -1) //check and manipulate "upper tag"
+                //find deepest "closed tag"
+                tempIndex = deepestCloseIndex + 1;
+                for (byte current = 0; current < closedTags.Length - 1; current++)
                 {
-					closeIndex = inputData.IndexOf(upperTagClose, (closeIndex + 1));
-					openIndex = inputData.IndexOf(upperTagOpen);
-                }
-                //if (inputdata.indexof(lowertagclose, ) //check and manipulate "lower tag"
-                //{
+                    currentCloseIndex = inputData.IndexOf(closedTags[current], deepestCloseIndex + 1);
 
-                //}
-                if (true) //check and manipulate "rev tag"
-                {
-
+                    if ((tempIndex == deepestCloseIndex + 1 || currentCloseIndex < tempIndex) && currentCloseIndex != -1) //condition: "tempIndex == deepestCloseIndex + 1" , will parse FIRST founded "close tag"
+                    {                                                                                                     //condition: "currentCloseIndex < tempIndex"      , will parse any other DEEPER "close tag"
+                        tempIndex = currentCloseIndex;
+                        deepestTag = current;
+                    }
                 }
-                if (true) //check and manipulate "del tag"
-                {
+                deepestCloseIndex = tempIndex;
 
-                }
-                closeIndex = -1;
+                //find deepest "opened tag"
+                deepestOpenIndex = inputData.LastIndexOf(openedTags[deepestTag], deepestCloseIndex);
+
             }
         }
     }
 }
-//да търси все по-навътре за отварящи тагове и при първия срещнат ЗАТВАРЯЩ да извършва действие с ПОСЛЕДНИЯ отварящ, после предходния и т.н.
+
