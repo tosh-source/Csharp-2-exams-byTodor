@@ -16,7 +16,11 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
 
             //input
             short numberOfLines = short.Parse(Console.ReadLine());
-            string inputData = Console.ReadLine(); //трябва да го направя в масив защото, ще се подават мн редове
+            string[] text = new string[numberOfLines];
+            for (int line = 0; line < numberOfLines; line++)
+            {
+                text[line] = Console.ReadLine().ToString();
+            }
 
             //calculation
             int currentCloseIndex = -1;
@@ -27,13 +31,13 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
 
             string output = string.Empty;
 
-            for (int i = 0; i < inputData.Length; i++)
+            for (int i = 0; i < text.Length; i++)
             {
                 //find deepest "closed tag"
                 tempIndex = deepestCloseIndex + 1;
                 for (byte current = 0; current < closedTags.Length - 1; current++)
                 {
-                    currentCloseIndex = inputData.IndexOf(closedTags[current], deepestCloseIndex + 1);
+                    currentCloseIndex = text[i].IndexOf(closedTags[current], deepestCloseIndex + 1);
 
                     if ((tempIndex == deepestCloseIndex + 1 || currentCloseIndex < tempIndex) && currentCloseIndex != -1) //condition: "tempIndex == deepestCloseIndex + 1" , will parse FIRST founded "close tag"
                     {                                                                                                     //condition: "currentCloseIndex < tempIndex"      , will parse any other DEEPER "close tag"
@@ -44,10 +48,15 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
                 deepestCloseIndex = tempIndex;
 
                 //find deepest "opened tag"
-                deepestOpenIndex = inputData.LastIndexOf(openedTags[deepestTag], deepestCloseIndex);
+                deepestOpenIndex = text[i].LastIndexOf(openedTags[deepestTag], deepestCloseIndex);
 
+                //manipulate text
+                // MAnipulateText(openedTags, closedTags, deepestTag, deepestOpenIndex, deepestCloseIndex);
             }
         }
+
+
     }
 }
 
+//евентуална грешка би възникнала, когато един отворен таг е пр. на ПЪРВИ ред, а затварящия таг пр. на ред ДВЕ. Алгоритъна не е направе да помни така таговете.
