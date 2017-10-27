@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
 {
@@ -15,12 +12,6 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
         static void Main(string[] args)
         { //condition & BGCoder: http://bgcoder.com/Contests/55/CSharp-Part-2-2012-2013-11-Feb-2013
 
-            //test
-            var test = new StringReader(@"3
-So<rev><upper>saw</upper> txet em</rev>
-<lower><upper>here</upper></lower>");
-            Console.SetIn(test);
-
             //input
             short numberOfLines = short.Parse(Console.ReadLine());
             string[] text = new string[numberOfLines];
@@ -31,20 +22,19 @@ So<rev><upper>saw</upper> txet em</rev>
 
             //calculation
             int currentCloseIndex = -1;
-            int tempIndex = -1;
             int deepestOpenIndex = -1;
-            int deepestCloseIndex = -1;
+            int deepestCloseIndex = 0;
             int deepestTag = 0;
             StringBuilder currentLine = new StringBuilder();
             StringBuilder subText = new StringBuilder();
 
-            Calculations(ref text, ref currentCloseIndex, ref tempIndex, ref deepestOpenIndex, ref deepestCloseIndex, ref deepestTag, currentLine, subText);
+            Calculations(ref text, ref currentCloseIndex, ref deepestCloseIndex, ref deepestOpenIndex, ref deepestTag, currentLine, subText);
 
             //print
             Console.WriteLine(string.Join("\n", text));
         }
 
-        private static void Calculations(ref string[] text, ref int currentCloseIndex, ref int tempIndex, ref int deepestOpenIndex, ref int deepestCloseIndex, ref int deepestTag, StringBuilder currentLine, StringBuilder subText)
+        private static void Calculations(ref string[] text, ref int currentCloseIndex, ref int deepestCloseIndex, ref int deepestOpenIndex, ref int deepestTag, StringBuilder currentLine, StringBuilder subText)
         {
             for (int line = 0; line < text.Length; line++)
             {
@@ -56,24 +46,21 @@ So<rev><upper>saw</upper> txet em</rev>
                     bool continueOrNot = false;
 
                     //find deepest "closed tag"
-                    tempIndex = deepestCloseIndex + 1;
-                    if (deepestCloseIndex + 1 > text[line].Length - 1) deepestCloseIndex = -1; //check for overflow exception
+                    deepestCloseIndex = 0;
 
                     for (byte current = 0; current < closedTags.Length - 1; current++)
                     {
-                        currentCloseIndex = text[line].IndexOf(closedTags[current], deepestCloseIndex + 1);
+                        currentCloseIndex = text[line].IndexOf(closedTags[current], 0);
 
-                        if ((tempIndex == deepestCloseIndex + 1 || currentCloseIndex < tempIndex) && currentCloseIndex != -1) //condition: "tempIndex == deepestCloseIndex + 1" , will parse FIRST founded "close tag"
-                        {                                                                                                     //condition: "currentCloseIndex < tempIndex"      , will parse any other DEEPER "close tag"
-                            tempIndex = currentCloseIndex;
+                        if ((deepestCloseIndex == 0 || currentCloseIndex <= deepestCloseIndex) && currentCloseIndex != -1)    //condition: "deepestCloseIndex == 0"                 , will parse FIRST founded "close tag"
+                        {                                                                                                     //condition: "currentCloseIndex <= deepestCloseIndex" , will parse any other DEEPER "close tag"
+                            deepestCloseIndex = currentCloseIndex;
                             deepestTag = current;
                             continueOrNot = true;
                         }
                     }
 
                     if (continueOrNot == false) break; //stop processing if no more tags and step to the next line
-
-                    deepestCloseIndex = tempIndex;
 
                     //find deepest "opened tag"
                     deepestOpenIndex = text[line].LastIndexOf(openedTags[deepestTag], deepestCloseIndex);
@@ -105,7 +92,6 @@ So<rev><upper>saw</upper> txet em</rev>
                                    .ToLower());
                     break;
                 case 2: //The <rev> tag reverses all text in it
-
                     subText.Append(text[line]
                                    .Substring(deepestOpenIndex + "<rev>".Length, deepestCloseIndex - (deepestOpenIndex + "<rev>".Length))
                                    .Reverse().ToArray());
