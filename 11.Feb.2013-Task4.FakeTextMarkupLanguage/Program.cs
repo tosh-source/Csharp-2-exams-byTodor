@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
 {
@@ -11,6 +12,13 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
 
         static void Main(string[] args)
         { //condition & BGCoder: http://bgcoder.com/Contests/55/CSharp-Part-2-2012-2013-11-Feb-2013
+
+            //tests
+//            var testInput = new StringReader(@"3
+//<rev>?<del>already </del></rev>
+//<toggle><rev>ERa</rev></toggle> you
+//<rev>noc</rev><lower>FUSED</lower");
+//            Console.SetIn(testInput);
 
             //input
             short numberOfLines = short.Parse(Console.ReadLine());
@@ -48,7 +56,7 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
                     //find deepest "closed tag"
                     deepestCloseIndex = 0;
 
-                    for (byte current = 0; current < closedTags.Length - 1; current++)
+                    for (byte current = 0; current < closedTags.Length; current++)
                     {
                         currentCloseIndex = text[line].IndexOf(closedTags[current], 0);
 
