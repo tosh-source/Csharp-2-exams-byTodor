@@ -14,16 +14,16 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
         { //condition & BGCoder: http://bgcoder.com/Contests/55/CSharp-Part-2-2012-2013-11-Feb-2013
 
             //tests
-//            var testInput = new StringReader(@"3
-//<rev>?<del>already </del></rev>
-//<toggle><rev>ERa</rev></toggle> you
-//<rev>noc</rev><lower>FUSED</lower");
-//            Console.SetIn(testInput);
+            var testInput = new StringReader(@"3
+
+<toggle><rev>ERa</rev></toggle> you
+<rev>noc</rev><lower>FUSED</lower");
+            Console.SetIn(testInput);
 
             //input
             short numberOfLines = short.Parse(Console.ReadLine());
             string[] text = new string[numberOfLines];
-            for (int line = 0; line < numberOfLines; line++)
+            for (short line = 0; line < numberOfLines; line++)
             {
                 text[line] = Console.ReadLine().ToString();
             }
@@ -44,7 +44,7 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
 
         private static void Calculations(ref string[] text, ref int currentCloseIndex, ref int deepestCloseIndex, ref int deepestOpenIndex, ref int deepestTag, StringBuilder currentLine, StringBuilder subText)
         {
-            for (int line = 0; line < text.Length; line++)
+            for (short line = 0; line < text.Length; line++)
             {
                 currentLine.Clear();
                 currentLine.Append(text[line]);
