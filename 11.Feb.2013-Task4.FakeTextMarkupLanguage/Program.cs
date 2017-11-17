@@ -85,24 +85,24 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
 
             switch (deepestTag)
             {
-                case 0: //The <upper> tag converts text to its uppercase variant
-                    subText.Append(text.Substring(deepestOpenIndex + openedTags[deepestTag].Length, 
+                case 0: //The <upper> tag converts text to its uppercase variant        
+                    subText.Append(text.Substring(deepestOpenIndex + openedTags[deepestTag].Length,     //openedTags[deepestTag].Length => "upper".Length
                                                   deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length))
                                                  .ToUpper());
                     break;
-                case 1: //The <lower> tag converts text to its lowercase variant
-                    subText.Append(text.Substring(deepestOpenIndex + openedTags[deepestTag].Length, 
+                case 1: //The <lower> tag converts text to its lowercase variant        
+                    subText.Append(text.Substring(deepestOpenIndex + openedTags[deepestTag].Length,      //openedTags[deepestTag].Length => "lower".Length
                                                   deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length))
                                                  .ToLower());
                     break;
-                case 2: //The <rev> tag reverses all text in it
-                    subText.Append(text.Substring(deepestOpenIndex + openedTags[deepestTag].Length, 
+                case 2: //The <rev> tag reverses all text in it                         
+                    subText.Append(text.Substring(deepestOpenIndex + openedTags[deepestTag].Length,     //openedTags[deepestTag].Length => "rev".Length
                                                   deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length))
                                                  .Reverse().ToArray());
                     break;
                 case 3: //"<toggle>" tag rules -> if a character is uppercase, it converts it to lowercase
                         //                        if a character is lowercase, it converts it to uppercase
-                    string temp = text.Substring(deepestOpenIndex + openedTags[deepestTag].Length, 
+                    string temp = text.Substring(deepestOpenIndex + openedTags[deepestTag].Length,      //openedTags[deepestTag].Length => "toggle".Length
                                                  deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length));
 
                     for (int i = 0; i < temp.Length; i++)
