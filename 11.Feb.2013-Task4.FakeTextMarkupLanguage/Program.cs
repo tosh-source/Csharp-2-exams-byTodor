@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using System.IO;
 
 namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
 {
@@ -13,97 +12,184 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
         static void Main(string[] args)
         { //condition & BGCoder: http://bgcoder.com/Contests/55/CSharp-Part-2-2012-2013-11-Feb-2013
 
-            //tests
-//            var testInput = new StringReader(@"3
-//<toggle><rev>ERa</rev></toggle> you
-//<rev>noc</rev><lower>FUSED</lower>
-//<rev>?<rev>already </rev></rev>");
-//            Console.SetIn(testInput);
-
             //input
-            short numberOfLines = short.Parse(Console.ReadLine());
-            string text = string.Empty;
+            int numberOfLines = int.Parse(Console.ReadLine());
             StringBuilder textAsSB = new StringBuilder();
 
-            for (short line = 0; line < numberOfLines; line++)
+            for (int line = 0; line < numberOfLines; line++)
             {
                 textAsSB.Append(Console.ReadLine() + "\n");  //"Environment.NewLine" is better choice, "\n" is only for BGCoder
             }
-            text = textAsSB.ToString();
 
             //calculation
             int currentCloseIndex = -1;
             int deepestOpenIndex = -1;
             int deepestCloseIndex = 0;
             int deepestTag = 0;
-            StringBuilder subText = new StringBuilder();
 
-            Calculations(textAsSB, ref text, ref currentCloseIndex, ref deepestCloseIndex, ref deepestOpenIndex, ref deepestTag, subText);
+            Calculations(textAsSB, ref currentCloseIndex, ref deepestCloseIndex, ref deepestOpenIndex, ref deepestTag);
 
             //print
-            Console.WriteLine(text);
+            Console.WriteLine(textAsSB);
         }
 
-        private static void Calculations(StringBuilder textAsSB, ref string text, ref int currentCloseIndex, ref int deepestCloseIndex, ref int deepestOpenIndex, ref int deepestTag, StringBuilder subText)
+        private static void Calculations(StringBuilder textAsSB, ref int currentCloseIndex, ref int deepestCloseIndex, ref int deepestOpenIndex, ref int deepestTag)
         {
-                for (int processingSymbols = 0; processingSymbols < text.Length; processingSymbols++)
+            StringBuilder subText = new StringBuilder();
+            StringBuilder textToRemove = new StringBuilder();
+
+            for (int processingSymbols = 0; processingSymbols < textAsSB.Length; processingSymbols++)
+            {
+                bool continueOrNot = false;
+
+                //find deepest "closed tag"
+                deepestCloseIndex = 0;
+
+                for (byte current = 0; current < closedTags.Length; current++)
                 {
-                    bool continueOrNot = false;
+                    //currentCloseIndex = text.IndexOf(closedTags[current], 0);
+                    currentCloseIndex = SBIndexOf(textAsSB, closedTags[current]);
 
-                    //find deepest "closed tag"
-                    deepestCloseIndex = 0;
+                    if ((deepestCloseIndex == 0 || currentCloseIndex <= deepestCloseIndex) && currentCloseIndex != -1)    //condition: "deepestCloseIndex == 0"                 , will parse FIRST founded "close tag"
+                    {                                                                                                     //condition: "currentCloseIndex <= deepestCloseIndex" , will parse any other DEEPER "close tag"
+                        deepestCloseIndex = currentCloseIndex;
+                        deepestTag = current;
+                        continueOrNot = true;
+                    }
+                }
 
-                    for (byte current = 0; current < closedTags.Length; current++)
+                if (continueOrNot == false) break; //stop processing if no more tags
+
+                //find deepest "opened tag"
+                deepestOpenIndex = SBLastIndexOf(textAsSB, openedTags[deepestTag], deepestCloseIndex);
+
+                //manipulate text
+                int length = (deepestCloseIndex - deepestOpenIndex) + closedTags[deepestTag].Length;
+                textToRemove.Clear();
+                textToRemove.Append(textAsSB.ToString(deepestOpenIndex, length));
+
+                ManipulateTextMethod(textAsSB, subText, deepestTag, deepestOpenIndex, deepestCloseIndex);
+
+                textAsSB.Replace(textToRemove.ToString(), subText.ToString(), deepestOpenIndex, length);
+            }
+        }
+
+        private static int SBIndexOf(StringBuilder text, string valueToSearch)
+        {
+            char firstChar = valueToSearch[0];  //take the first element
+            int indexToReturn = -1;
+            bool continueOrNot = true;
+            int currentCheckedIndex = 0;
+
+            //default value of startIndex
+            int startIndex = 0;
+
+            //Calculations
+            //1.Start searching
+            for (int textIndex = startIndex; textIndex < text.Length; textIndex++)
+            {
+                if (text[textIndex] == firstChar)  //if there is matching
+                {
+                    //2.Compare(char by char) the value with the text from current position.
+                    for (int valueIndex = 0; valueIndex < valueToSearch.Length; valueIndex++)
                     {
-                        currentCloseIndex = text.IndexOf(closedTags[current], 0);
+                        if (valueIndex == 0) indexToReturn = textIndex + valueIndex;
+                        currentCheckedIndex = textIndex + valueIndex;
 
-                        if ((deepestCloseIndex == 0 || currentCloseIndex <= deepestCloseIndex) && currentCloseIndex != -1)    //condition: "deepestCloseIndex == 0"                 , will parse FIRST founded "close tag"
-                        {                                                                                                     //condition: "currentCloseIndex <= deepestCloseIndex" , will parse any other DEEPER "close tag"
-                            deepestCloseIndex = currentCloseIndex;
-                            deepestTag = current;
-                            continueOrNot = true;
+                        if (currentCheckedIndex > text.Length - 1)  //check for "OverFlow Exception" and stop, because no chance for possible matches
+                        {
+                            indexToReturn = -1;
+                            continueOrNot = false;
+                            break;
+                        }
+                        else if (text[currentCheckedIndex] != valueToSearch[valueIndex])  //if all chars of "valueToSearch" not matched, break and return index -1
+                        {
+                            indexToReturn = -1;
+                            break;
                         }
                     }
-
-                    if (continueOrNot == false) break; //stop processing if no more tags and step to the next line
-
-                    //find deepest "opened tag"
-                    deepestOpenIndex = text.LastIndexOf(openedTags[deepestTag], deepestCloseIndex);
-
-                    //manipulate text
-                    textAsSB.Remove(deepestOpenIndex, (deepestCloseIndex - deepestOpenIndex) + closedTags[deepestTag].Length);
-                    textAsSB.Insert(deepestOpenIndex,
-                                       ManipulateTextMethod(subText, ref text, deepestTag, deepestOpenIndex, deepestCloseIndex));
-
-                    text = textAsSB.ToString();
                 }
+
+                if (currentCheckedIndex > textIndex) textIndex = currentCheckedIndex;
+
+                if (continueOrNot == false || indexToReturn != -1) break;
+            }
+
+            return indexToReturn;
         }
 
-        private static StringBuilder ManipulateTextMethod(StringBuilder subText, ref string text, int deepestTag, int deepestOpenIndex, int deepestCloseIndex)
+        private static int SBLastIndexOf(StringBuilder text, string valueToSearch, int? startIndex = null)
+        {
+            char firstChar = valueToSearch[valueToSearch.Length - 1]; //take the (last)first element
+            int indexToReturn = -1;
+            bool continueOrNot = true;
+            int currentCheckedIndex = text.Length - 1;
+
+            //check default value of startIndex
+            if (startIndex == null) startIndex = text.Length - 1;
+
+            //Calculations
+            //1.Start searching
+            for (int textIndex = (int)startIndex; textIndex >= 0; textIndex--)
+            {
+                if (text[textIndex] == firstChar)  //if there is matching
+                {
+                    //2.Compare(char by char) the value with the text from current position.
+                    for (int valueIndex = valueToSearch.Length - 1; valueIndex >= 0; valueIndex--)
+                    {
+                        if (valueIndex == valueToSearch.Length - 1)
+                        {
+                            indexToReturn = textIndex - valueIndex;
+                        }
+                        currentCheckedIndex = textIndex - (valueToSearch.Length - 1 - valueIndex);
+
+                        if ((textIndex - valueIndex) < 0)  //check for "OverFlow Exception" and stop, because no chance for possible matches
+                        {
+                            indexToReturn = -1;
+                            continueOrNot = false;
+                            break;
+                        }
+                        else if (text[currentCheckedIndex] != valueToSearch[valueIndex])  //if all chars of "valueToSearch" not matched, break and return index -1
+                        {
+                            indexToReturn = -1;
+                            break;
+                        }
+                    }
+                }
+
+                if (currentCheckedIndex < textIndex) textIndex = currentCheckedIndex;
+
+                if (continueOrNot == false || indexToReturn != -1) break;
+            }
+
+            return indexToReturn;
+        }
+
+        private static void ManipulateTextMethod(StringBuilder textAsSB, StringBuilder subText, int deepestTag, int deepestOpenIndex, int deepestCloseIndex)
         {
             subText.Clear();
 
-            switch (deepestTag)
+            switch (deepestTag)  //NOTE: "ToString()" with parameters (in StringBuilder) is like a "Substring()" (in string).
             {
                 case 0: //The <upper> tag converts text to its uppercase variant        
-                    subText.Append(text.Substring(deepestOpenIndex + openedTags[deepestTag].Length,     //openedTags[deepestTag].Length => "upper".Length
-                                                  deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length))
-                                                 .ToUpper());
+                    subText.Append(textAsSB.ToString(deepestOpenIndex + openedTags[deepestTag].Length,     //openedTags[deepestTag].Length => "upper".Length
+                                                     deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length))
+                                                    .ToUpper());
                     break;
                 case 1: //The <lower> tag converts text to its lowercase variant        
-                    subText.Append(text.Substring(deepestOpenIndex + openedTags[deepestTag].Length,      //openedTags[deepestTag].Length => "lower".Length
-                                                  deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length))
-                                                 .ToLower());
+                    subText.Append(textAsSB.ToString(deepestOpenIndex + openedTags[deepestTag].Length,      //openedTags[deepestTag].Length => "lower".Length
+                                                     deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length))
+                                                    .ToLower());
                     break;
                 case 2: //The <rev> tag reverses all text in it                         
-                    subText.Append(text.Substring(deepestOpenIndex + openedTags[deepestTag].Length,     //openedTags[deepestTag].Length => "rev".Length
-                                                  deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length))
-                                                 .Reverse().ToArray());
+                    subText.Append(textAsSB.ToString(deepestOpenIndex + openedTags[deepestTag].Length,     //openedTags[deepestTag].Length => "rev".Length
+                                                     deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length))
+                                                    .Reverse().ToArray());
                     break;
                 case 3: //"<toggle>" tag rules -> if a character is uppercase, it converts it to lowercase
                         //                        if a character is lowercase, it converts it to uppercase
-                    string temp = text.Substring(deepestOpenIndex + openedTags[deepestTag].Length,      //openedTags[deepestTag].Length => "toggle".Length
-                                                 deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length));
+                    string temp = textAsSB.ToString(deepestOpenIndex + openedTags[deepestTag].Length,      //openedTags[deepestTag].Length => "toggle".Length
+                                                    deepestCloseIndex - (deepestOpenIndex + openedTags[deepestTag].Length));
 
                     for (int i = 0; i < temp.Length; i++)
                     {
@@ -125,8 +211,6 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
                     subText.Append(string.Empty);
                     break;
             }
-
-            return subText;
         }
     }
 }
