@@ -10,7 +10,8 @@ namespace _11.Feb._2013_Task4.FakeTextMarkupLanguage
         private static string[] closedTags = { "</upper>", "</lower>", "</rev>", "</toggle>", "</del>" };
 
         static void Main(string[] args)
-        { //condition & BGCoder: http://bgcoder.com/Contests/55/CSharp-Part-2-2012-2013-11-Feb-2013
+        {   //condition & BGCoder: http://bgcoder.com/Contests/55/CSharp-Part-2-2012-2013-11-Feb-2013
+            //another solution on YouTube: https://www.youtube.com/watch?v=YKdrRt-hpb8
 
             //input
             int numberOfLines = int.Parse(Console.ReadLine());
