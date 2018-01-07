@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "6.mar.2015-problem3-BitShiftMatrix", "6.mar.2015-problem3-BitShiftMatrix\6.mar.2015-problem3-BitShiftMatrix.csproj", "{B23C7BD9-9F6B-4709-A3BD-07757ACC6B48}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11.Feb.2013-Task4.FakeTextMarkupLanguage", "11.Feb.2013-Task4.FakeTextMarkupLanguage\11.Feb.2013-Task4.FakeTextMarkupLanguage.csproj", "{99BC8BA1-B3BA-4BD9-A8FF-076D52CCEC44}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11.Feb.2013-Task3.KukataIsDancing", "11.Feb.2013-Task3.KukataIsDancing\11.Feb.2013-Task3.KukataIsDancing.csproj", "{AEF04279-353C-4C7F-9E71-026B8ACFCBEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11.Feb.2013-Task5-ThreeInOne", "11.Feb.2013-Task5-ThreeInOne\11.Feb.2013-Task5-ThreeInOne.csproj", "{608A1769-4DD4-47A6-ADD6-A372E7D2D15E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,8 +65,15 @@ Global
 		{AEF04279-353C-4C7F-9E71-026B8ACFCBEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEF04279-353C-4C7F-9E71-026B8ACFCBEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEF04279-353C-4C7F-9E71-026B8ACFCBEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{608A1769-4DD4-47A6-ADD6-A372E7D2D15E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{608A1769-4DD4-47A6-ADD6-A372E7D2D15E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{608A1769-4DD4-47A6-ADD6-A372E7D2D15E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{608A1769-4DD4-47A6-ADD6-A372E7D2D15E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC1EFB02-5EE6-46EC-9A54-B6DC024EF981}
 	EndGlobalSection
 EndGlobal
