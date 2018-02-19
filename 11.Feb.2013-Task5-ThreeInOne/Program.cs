@@ -114,19 +114,19 @@ namespace _11.Feb._2013_Task5_ThreeInOne
                 switch (currentUserCoin) //G1_S1_B1[0] - Gold  //G1_S1_B1[1] - Silver  //G1_S1_B1[2] - Bronze
                 {
                     case 0:  //Gold
-                        ExchangeGoldCoins(G1_S1_B1, ref exchangeOperations, hasValue);
+                        ExchangeGoldCoins(G1_S1_B1, ref exchangeOperations, ref hasValue);
                         break;
                     case 1:  //Silver
-                        ExchangeSilverCoins(G1_S1_B1, ref exchangeOperations, hasValue);
+                        ExchangeSilverCoins(G1_S1_B1, ref exchangeOperations, ref hasValue);
                         break;
                     case 2:  //Bronze
-                        ExchangeBronzeCoins(G1_S1_B1, ref exchangeOperations, hasValue);
+                        ExchangeBronzeCoins(G1_S1_B1, ref exchangeOperations, ref hasValue);
                         break;
                 }
             }
         }
 
-        private static void ExchangeGoldCoins(int[] G1_S1_B1, ref int exchangeOperations, bool hasValue)
+        private static void ExchangeGoldCoins(int[] G1_S1_B1, ref int exchangeOperations, ref bool hasValue)
         {
             //the bank will give you 1 gold coin in exchange for 11 silver coins
             if (G1_S1_B1[1] >= 11) //if silver has 11 or more coins, operate..
@@ -147,7 +147,7 @@ namespace _11.Feb._2013_Task5_ThreeInOne
             }
         }
 
-        private static void ExchangeSilverCoins(int[] G1_S1_B1, ref int exchangeOperations, bool hasValue)
+        private static void ExchangeSilverCoins(int[] G1_S1_B1, ref int exchangeOperations, ref bool hasValue)
         {
             //the bank will give you 9 silver coins in exchange for 1 gold coin
             if (G1_S1_B1[0] >= 1)
@@ -168,7 +168,7 @@ namespace _11.Feb._2013_Task5_ThreeInOne
             }
         }
 
-        private static void ExchangeBronzeCoins(int[] G1_S1_B1, ref int exchangeOperations, bool hasValue)
+        private static void ExchangeBronzeCoins(int[] G1_S1_B1, ref int exchangeOperations, ref bool hasValue)
         {
             //the bank will give you 9 bronze coins in exchange for 1 silver coin
             if (G1_S1_B1[1] >= 1)

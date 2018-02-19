@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "6.mar.2015-problem3-BitShiftMatrix", "6.mar.2015-problem3-BitShiftMatrix\6.mar.2015-problem3-BitShiftMatrix.csproj", "{B23C7BD9-9F6B-4709-A3BD-07757ACC6B48}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11.Feb.2013-Task3.KukataIsDancing", "11.Feb.2013-Task3.KukataIsDancing\11.Feb.2013-Task3.KukataIsDancing.csproj", "{AEF04279-353C-4C7F-9E71-026B8ACFCBEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11.Feb.2013-Task5-ThreeInOne", "11.Feb.2013-Task5-ThreeInOne\11.Feb.2013-Task5-ThreeInOne.csproj", "{608A1769-4DD4-47A6-ADD6-A372E7D2D15E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "22.Jan.2014-Task3.Patterns", "22.Jan.2014-Task3.Patterns\22.Jan.2014-Task3.Patterns.csproj", "{0B6E7036-5583-474A-88DE-64A346F092D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{608A1769-4DD4-47A6-ADD6-A372E7D2D15E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{608A1769-4DD4-47A6-ADD6-A372E7D2D15E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{608A1769-4DD4-47A6-ADD6-A372E7D2D15E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B6E7036-5583-474A-88DE-64A346F092D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B6E7036-5583-474A-88DE-64A346F092D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B6E7036-5583-474A-88DE-64A346F092D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B6E7036-5583-474A-88DE-64A346F092D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
