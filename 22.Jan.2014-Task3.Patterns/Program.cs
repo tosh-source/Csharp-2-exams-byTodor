@@ -1,33 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace _22.Jan._2014_Task3.Patterns
 {
     class Program
     {
         static void Main(string[] args)
-        {
-            //tests
-            //            StringReader testInput = new StringReader(@"7
-            //1 2 3 4 5 6 7
-            //7 6 5 4 3 2 1
-            //1 2 3 4 5 6 7
-            //7 6 5 4 3 2 1
-            //1 2 3 4 5 6 7
-            //7 6 5 4 3 2 1
-            //1 2 3 4 5 6 7");
-            //            Console.SetIn(testInput);
+        {   //Condition & BGCoder: http://bgcoder.com/Contests/142/CSharp-Part-2-2013-2014-22-Jan-2014-Evening
+            //video: https://www.youtube.com/watch?v=2UpXc0QM82E
+            //video: https://www.youtube.com/watch?v=FzF5doGuSRM
 
             //input
             int n = int.Parse(Console.ReadLine());
             int[][] matrix = new int[n][];
             for (int i = 0; i < n; i++)
             {
-                matrix[i] = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                matrix[i] = Console.ReadLine().Trim().Split(' ').Select(int.Parse).ToArray();   //".Trim()" method is needed if use "BGCoder" (in last few test there is more "spaces" than usual)
             }
 
             //calculation
@@ -63,16 +51,15 @@ namespace _22.Jan._2014_Task3.Patterns
             }
         }
 
-        private static string PrintDiagonalOfMatrix(int[][] matrix)
+        private static long PrintDiagonalOfMatrix(int[][] matrix)
         {
-            int result = 0;
-            for (int row = matrix.Length - 1; row >= 0; row--)  //row in reverse order
+            long result = 0;
+            for (int row = 0; row < matrix.Length; row++)
             {
-                result += matrix[row][matrix.Length - 1 - row];
+                result += matrix[row][row];
             }
 
-            string resultToPrint = result.ToString();
-            return resultToPrint;
+            return result;
         }
 
         private static void CalculatePattern(int[][] matrix, int row, int col, ref long currentBestPattern, ref byte counter, ref bool hasPattern)
@@ -165,5 +152,3 @@ namespace _22.Jan._2014_Task3.Patterns
         }
     }
 }
-
-//да тествам ако матрицата е ОТРИЦАТЕЛНА, дали няма "Runtime error"
