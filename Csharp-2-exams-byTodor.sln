@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11.Feb.2013-Task5-ThreeInOn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "22.Jan.2014-Task3.Patterns", "22.Jan.2014-Task3.Patterns\22.Jan.2014-Task3.Patterns.csproj", "{0B6E7036-5583-474A-88DE-64A346F092D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "22.Jan.2014-Task1.TRES4.Numbers", "22.Jan.2014-Task1.TRES4.Numbers\22.Jan.2014-Task1.TRES4.Numbers.csproj", "{0D072542-69D7-439A-AADD-392F1F74E261}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{0B6E7036-5583-474A-88DE-64A346F092D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B6E7036-5583-474A-88DE-64A346F092D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B6E7036-5583-474A-88DE-64A346F092D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D072542-69D7-439A-AADD-392F1F74E261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D072542-69D7-439A-AADD-392F1F74E261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D072542-69D7-439A-AADD-392F1F74E261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D072542-69D7-439A-AADD-392F1F74E261}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
