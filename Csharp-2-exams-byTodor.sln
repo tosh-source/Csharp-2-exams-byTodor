@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "22.Jan.2014-Task3.Patterns"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "22.Jan.2014-Task1.TRES4.Numbers", "22.Jan.2014-Task1.TRES4.Numbers\22.Jan.2014-Task1.TRES4.Numbers.csproj", "{0D072542-69D7-439A-AADD-392F1F74E261}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14.sep.2013-Task3-Trails3D", "14.sep.2013-Task3-Trails3D\14.sep.2013-Task3-Trails3D.csproj", "{1D3CE780-7975-4218-A670-28B5B1A8F00A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{0D072542-69D7-439A-AADD-392F1F74E261}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D072542-69D7-439A-AADD-392F1F74E261}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D072542-69D7-439A-AADD-392F1F74E261}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D3CE780-7975-4218-A670-28B5B1A8F00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D3CE780-7975-4218-A670-28B5B1A8F00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D3CE780-7975-4218-A670-28B5B1A8F00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D3CE780-7975-4218-A670-28B5B1A8F00A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
