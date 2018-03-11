@@ -20,7 +20,11 @@ namespace _14.sep._2013_Task3_Trails3D
             Console.SetIn(reader);
 
             //input
-            int[] X_Y_Z = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+            short[] X_Y_Z = Console.ReadLine().Split(' ').Select(short.Parse).ToArray();
+            short x = X_Y_Z[0];
+            short y = X_Y_Z[1];
+            short z = X_Y_Z[2];
+
             string red = Console.ReadLine();
             string blue = Console.ReadLine();
 
@@ -31,14 +35,18 @@ namespace _14.sep._2013_Task3_Trails3D
             assignMoves(blue, blueMotions);
 
             //calculating
-            int[][] matrix = new int[3][];
-            matrix[0] = new int[X_Y_Z[0] + 1];  //x
-            matrix[1] = new int[X_Y_Z[1] + 1];  //y
-            matrix[2] = new int[X_Y_Z[2] + 1];  //z
+            int rows = y;
+            int cols = x * z;
+            byte[,] matrix = new byte[rows + 1, cols + 1];
 
-            int xStart = (matrix[0].Length) / 2;  //start position ox 'x'
-            int yStart = (matrix[1].Length) / 2;  //start position on 'y'
-            
+            //start positions on 'X' and 'Y'
+            //red player
+            int startRed_X = (x + 1) / 2;  //start position on 'x'
+            int startRed_Y = (y + 1) / 2;  //start position on 'y'
+            //blue player
+            int startBlue_X = x + z + startRed_X;
+            int startBlue_Y = startRed_Y;
+
             for (int gameCycle = 0; gameCycle < Math.Max(redMotions.Count, blueMotions.Count); gameCycle++)
             {
 
