@@ -17,8 +17,8 @@ namespace _14.sep._2013_Task3_Trails3D
 
             //tests
             StringReader reader = new StringReader(@"4 2 4
-3MRL10ML
-2MR1ML1M");
+3M1M
+2M1M1M");
             Console.SetIn(reader);
 
             //1.input
@@ -39,28 +39,22 @@ namespace _14.sep._2013_Task3_Trails3D
             //2a.Define the matrix
             int rows = y;
             int cols = x * z;
-            byte[,] matrix = new byte[rows + 1, cols + 1];
+            char[,] matrix = new char[rows + 1, cols + 1];
 
             //2b.Define start 'X' and 'Y' coordinates
             //red player
-            int startRed_Y = (y + 1) / 2;
-            int startRed_X = (x + 1) / 2;
-            byte currRedDirection = 1;  //redDirections[1] -> R = "Right
-            int redRow = startRed_Y;
-            int redCol = startRed_X;
+            int redRow = (y + 1) / 2;   //start red on position "Y"
+            int redCol = (x + 1) / 2;   //start red on position "X"
+            byte currRedDirection = 1;  //directions[1] -> R = "Right
 
             //blue player
-            int startBlue_Y = startRed_Y;
-            int startBlue_X = x + z + startRed_X;
-            byte currBlueDirection = 3;  //blueDirections[3] -> L = "Left
-            int blueRow = startBlue_Y;
-            int blueCol = startBlue_X;
+            int blueRow = redRow;         //start blue on position "Y"
+            int blueCol = x + z + redCol; //start blue on position "X"
+            byte currBlueDirection = 3;   //directions[3] -> L = "Left
 
             //2c.Define start positions on the matrix
-            //RED player == 1
-            //BLUE player == 2
-            matrix[startRed_Y, startRed_X] = 1;
-            matrix[startBlue_Y, startBlue_X] = 2;
+            matrix[redRow, redCol] = 'R';    //RED player == R
+            matrix[blueRow, blueCol] = 'B';  //BLUE player == B
 
             short redPlayerIndex = 0;
             short bluePlayerIndex = 0;
@@ -99,9 +93,12 @@ namespace _14.sep._2013_Task3_Trails3D
                     }
 
                     short howManyMoves = 0;
-                    short.TryParse(tempNumb, out howManyMoves);
+                    if (!(short.TryParse(tempNumb, out howManyMoves)))
+                    {
+                        howManyMoves = 1;
+                    }
 
-                    //MoveOnTheGrid(currRedDirect, );
+                    //MoveOnTheGrid(currentPlayerDirection, );
                     playerIndex++;
                     break;
                 }
