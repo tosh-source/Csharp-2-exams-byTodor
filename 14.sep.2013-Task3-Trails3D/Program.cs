@@ -59,8 +59,8 @@ namespace _14.sep._2013_Task3_Trails3D
             short redPlayerIndex = 0;
             short bluePlayerIndex = 0;
 
-            sbyte redPlayerResult = 0;   //dafault(draw) -> 0 / lost -> -1 / win -> 1
-            sbyte bluePlayerResult = 0;  //dafault(draw) -> 0 / lost -> -1 / win -> 1
+            sbyte redPlayerResult = 0;   //default(draw) -> 0 / lost -> -1 / win -> 1
+            sbyte bluePlayerResult = 0;  //default(draw) -> 0 / lost -> -1 / win -> 1
 
             for (int gameCycle = 0; gameCycle < Math.Max(redMotions.Count, blueMotions.Count); gameCycle++)
             {
@@ -116,7 +116,7 @@ namespace _14.sep._2013_Task3_Trails3D
             if (directions[playerDirection] == 'U')
             {
                 row--;
-                if (row < 0)  //player fals, out of grid
+                if (row < 0)  //player fall, out of grid
                 {
                     playerResult = -1;
                     return;
@@ -137,7 +137,7 @@ namespace _14.sep._2013_Task3_Trails3D
             else if (directions[playerDirection] == 'D')
             {
                 row++;
-                if (row >= matrix.GetLength(0))  //player fals, out of grid
+                if (row >= matrix.GetLength(0))  //player fall, out of grid
                 {
                     playerResult = -1;
                     return;
@@ -211,3 +211,4 @@ namespace _14.sep._2013_Task3_Trails3D
 }
 
 //info: http://my.telerikacademy.com/Forum/Questions/8445/CSharp-Part2-Exam-Evening-Trails-3D
+//use .NET 4.6.1 ()
