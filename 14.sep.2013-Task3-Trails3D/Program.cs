@@ -211,4 +211,4 @@ namespace _14.sep._2013_Task3_Trails3D
 }
 
 //info: http://my.telerikacademy.com/Forum/Questions/8445/CSharp-Part2-Exam-Evening-Trails-3D
-//use .NET 4.6.1 ()
+//use .NET 4.6.1 (C# 6.0)
