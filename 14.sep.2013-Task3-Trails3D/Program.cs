@@ -23,7 +23,7 @@ namespace _14.sep._2013_Task3_Trails3D
 
             //1.input
             short[] X_Y_Z = Console.ReadLine().Split(' ').Select(short.Parse).ToArray();
-            short x = X_Y_Z[0];
+            short x = X_Y_Z[0];  //по картинката изглежда, че трябва да завъртя стойностите на Х и Y
             short y = X_Y_Z[1];
             short z = X_Y_Z[2];
 
@@ -52,29 +52,27 @@ namespace _14.sep._2013_Task3_Trails3D
             int blueCol = x + z + redCol; //start blue on position "X"
             byte currBlueDirection = 3;   //directions[3] -> L = "Left
 
-            //2c.Define start positions on the matrix
-            matrix[redRow, redCol] = 'R';    //RED player == R
-            matrix[blueRow, blueCol] = 'B';  //BLUE player == B
+            //2c.Define some more parameters
+            char redPlayerInGame = 'R';
+            char bluePlayerInGame = 'B';
 
-            short redPlayerIndex = 0;
-            short bluePlayerIndex = 0;
+            short redIndex = 0;
+            short blueIndex = 0;
 
-            sbyte redPlayerResult = 0;   //default(draw) -> 0 / lost -> -1 / win -> 1
-            sbyte bluePlayerResult = 0;  //default(draw) -> 0 / lost -> -1 / win -> 1
+            sbyte redResult = 0;   //default(draw) -> 0 / lost -> -1 / win -> 1
+            sbyte blueResult = 0;  //default(draw) -> 0 / lost -> -1 / win -> 1
 
             for (int gameCycle = 0; gameCycle < Math.Max(redMotions.Count, blueMotions.Count); gameCycle++)
             {
-                CatchPlayerMoves(ref redPlayerResult, redMotions, ref currRedDirection, ref redPlayerIndex, matrix, ref redRow, ref redCol);
+                CatchPlayerMoves(ref redResult, redPlayerInGame, redMotions, ref currRedDirection, ref redIndex, matrix, ref redRow, ref redCol, gameCycle);
 
-                CatchPlayerMoves(ref bluePlayerResult, blueMotions, ref currBlueDirection, ref bluePlayerIndex, matrix, ref blueRow, ref blueCol);
+                CatchPlayerMoves(ref blueResult, bluePlayerInGame, blueMotions, ref currBlueDirection, ref blueIndex, matrix, ref blueRow, ref blueCol, gameCycle);
             }
 
         }
 
-        private static void CatchPlayerMoves(ref sbyte playerResult, List<string> playerMotions, ref byte playerDirection, ref short playerIndex, char[,] matrix, ref int row, ref int col)
+        private static void CatchPlayerMoves(ref sbyte playerResult, char playerInGame, List<string> playerMotions, ref byte playerDirection, ref short playerIndex, char[,] matrix, ref int row, ref int col, int gameCycle)
         {
-            char playerInGame = matrix[row, col];
-
             for (int motionCycles = playerIndex; motionCycles < playerMotions.Count; motionCycles++, playerIndex++)
             {
                 if (playerMotions[playerIndex][0] == 'R')
@@ -98,24 +96,34 @@ namespace _14.sep._2013_Task3_Trails3D
                     }
 
                     short howManyMoves = 0;
+                    short howManyMovesMAX = 0;
                     if (!(short.TryParse(tempNumb, out howManyMoves)))
                     {
                         howManyMoves = 1;
+                        howManyMovesMAX = howManyMoves;
+                    }
+                    else
+                    {
+                        howManyMovesMAX = howManyMoves;
                     }
 
-                    MovePlayerOnTheGrid(ref playerResult, playerInGame, playerDirection,ref howManyMoves, matrix, ref row, ref col);
+                    MovePlayerOnTheGrid(ref playerResult, playerInGame, playerDirection, ref howManyMoves, howManyMovesMAX, matrix, ref row, ref col, gameCycle);
                     playerIndex++;
                     break;
                 }
             }
         }
 
-        private static void MovePlayerOnTheGrid(ref sbyte playerResult, char playerInGame, byte playerDirection,ref short howManyMoves, char[,] matrix, ref int row, ref int col)
+        private static void MovePlayerOnTheGrid(ref sbyte playerResult, char playerInGame, byte playerDirection, ref short howManyMoves, short howManyMovesMAX, char[,] matrix, ref int row, ref int col, int gameCycle)
         {
             //directions: U = "Up", R = "Right", D = "Down", L = "Left"
             if (directions[playerDirection] == 'U')
             {
-                row--;
+                if (!(gameCycle == 0 && (howManyMovesMAX - howManyMoves == 0)))  //skip very first move
+                {
+                    row--;
+                }
+
                 if (row < 0)  //player fall, out of grid
                 {
                     playerResult = -1;
@@ -126,7 +134,11 @@ namespace _14.sep._2013_Task3_Trails3D
             }
             else if (directions[playerDirection] == 'R')
             {
-                col++;
+                if (!(gameCycle == 0 && (howManyMovesMAX - howManyMoves == 0)))  //skip very first move
+                {
+                    col++;
+                }
+
                 if (col >= matrix.GetLength(1))  //player will move from the last grid to the firs one
                 {
                     col = 0;
@@ -136,7 +148,11 @@ namespace _14.sep._2013_Task3_Trails3D
             }
             else if (directions[playerDirection] == 'D')
             {
-                row++;
+                if (!(gameCycle == 0 && (howManyMovesMAX - howManyMoves == 0)))  //skip very first move
+                {
+                    row++;
+                }
+
                 if (row >= matrix.GetLength(0))  //player fall, out of grid
                 {
                     playerResult = -1;
@@ -147,7 +163,11 @@ namespace _14.sep._2013_Task3_Trails3D
             }
             else if (directions[playerDirection] == 'L')
             {
-                col--;
+                if (!(gameCycle == 0 && (howManyMovesMAX - howManyMoves == 0)))  //skip very first move
+                {
+                    col--;
+                }
+
                 if (col < 0)  //player will move from the first grid to the last one
                 {
                     col = matrix.GetLength(1) - 1;  //???-да видя дали няма хвърле exeption, ако да, да махна '-1'
@@ -160,7 +180,7 @@ namespace _14.sep._2013_Task3_Trails3D
             if (howManyMoves > 1)
             {
                 howManyMoves--;
-                MovePlayerOnTheGrid(ref playerResult, playerInGame, playerDirection,ref howManyMoves, matrix, ref row, ref col);
+                MovePlayerOnTheGrid(ref playerResult, playerInGame, playerDirection, ref howManyMoves, howManyMovesMAX, matrix, ref row, ref col, gameCycle);
             }
             else
             {
