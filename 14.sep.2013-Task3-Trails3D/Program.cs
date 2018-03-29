@@ -38,8 +38,8 @@ namespace _14.sep._2013_Task3_Trails3D
 
             //2a.Define the matrix
             int rows = y;
-            int cols = x * z;
-            char[,] matrix = new char[rows + 1, cols + 1];  //???-може би ще трябва да махна "cols + 1" и да остане само "cols"
+            int cols = (2 * x) + (2 * z);
+            char[,] matrix = new char[rows + 1, cols];
 
             //2b.Define start 'X' and 'Y' coordinates
             //red player
@@ -62,6 +62,7 @@ namespace _14.sep._2013_Task3_Trails3D
             sbyte redResult = 0;   //default(draw) -> 0 / lost -> -1 / win -> 1
             sbyte blueResult = 0;  //default(draw) -> 0 / lost -> -1 / win -> 1
 
+            //3.Calculation
             for (int gameCycle = 0; gameCycle < Math.Max(redMotions.Count, blueMotions.Count); gameCycle++)
             {
                 CatchPlayerMoves(ref redResult, redPlayerInGame, redMotions, ref currRedDirection, ref redIndex, matrix, ref redRow, ref redCol, gameCycle);
@@ -69,6 +70,19 @@ namespace _14.sep._2013_Task3_Trails3D
                 CatchPlayerMoves(ref blueResult, bluePlayerInGame, blueMotions, ref currBlueDirection, ref blueIndex, matrix, ref blueRow, ref blueCol, gameCycle);
             }
 
+            //4.Results
+            if (redResult == 0 && blueResult == 0)  //draw
+            {
+                Console.WriteLine("DRAW");
+            }
+            else if (redResult == -1)  //blue win
+            {
+                Console.WriteLine("BLUE");
+            }
+            else if (blueResult == -1)  //red win
+            {
+                Console.WriteLine("RED");
+            }
         }
 
         private static void CatchPlayerMoves(ref sbyte playerResult, char playerInGame, List<string> playerMotions, ref byte playerDirection, ref short playerIndex, char[,] matrix, ref int row, ref int col, int gameCycle)
