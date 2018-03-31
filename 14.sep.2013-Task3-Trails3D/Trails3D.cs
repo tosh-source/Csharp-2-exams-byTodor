@@ -208,7 +208,7 @@ LMMR2M4MRMLMRMR1M2MRM");
 
                 if (col < 0)  //player will move from the first grid to the last one
                 {
-                    col = matrix.GetLength(1) - 1;  //???-да видя дали няма хвърле exeption, ако да, да махна '-1'
+                    col = matrix.GetLength(1) - 1;
                 }
 
                 playerResult = MakeTrailsOnTheGrid(playerResult, playerInGame, matrix, row, col);
