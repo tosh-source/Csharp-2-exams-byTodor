@@ -23,7 +23,7 @@ LMMR2M4MRMLMRMR1M2MRM");
 
             //1.input
             short[] X_Y_Z = Console.ReadLine().Split(' ').Select(short.Parse).ToArray();
-            short x = X_Y_Z[0];  //по картинката изглежда, че трябва да завъртя стойностите на Х и Y
+            short x = X_Y_Z[0];
             short y = X_Y_Z[1];
             short z = X_Y_Z[2];
 
@@ -87,6 +87,19 @@ LMMR2M4MRMLMRMR1M2MRM");
 
         private static void CatchPlayerMoves(ref sbyte playerResult, char playerInGame, List<string> playerMotions, ref sbyte playerDirection, ref short playerIndex, char[,] matrix, ref int row, ref int col, int gameCycle)
         {
+            //Check, if player is out of the Grid, stop.
+            bool isPlayerOutOfTheGrid = false;
+            if (playerResult == -1 && (row < 0 || row >= matrix.GetLength(0)))
+            {
+                isPlayerOutOfTheGrid = true;
+            }
+
+            if (isPlayerOutOfTheGrid == true)
+            {
+                return;
+            }
+
+            //Calculation
             for (int motionCycles = playerIndex; motionCycles < playerMotions.Count; motionCycles++, playerIndex++)
             {
                 if (playerMotions[playerIndex][0] == 'R') //Turn Right -> //playerDirection++
