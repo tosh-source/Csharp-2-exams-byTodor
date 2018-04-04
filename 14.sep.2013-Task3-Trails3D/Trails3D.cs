@@ -15,12 +15,6 @@ namespace _14.sep._2013_Task3_Trails3D
         {   //BGCoder & Conditions: http://bgcoder.com/Contests/95/CSharp-Part-2-2013-2014-14-Sept-2013-Evening
             //video: http://youtu.be/iGzwyi70C2k
 
-            //tests
-            StringReader reader = new StringReader(@"8 4 6
-2MLM1MRM2MR2MLMLMR3MRM
-LMMR2M4MRMLMRMR1M2MRM");
-            Console.SetIn(reader);
-
             //1.input
             short[] X_Y_Z = Console.ReadLine().Split(' ').Select(short.Parse).ToArray();
             short x = X_Y_Z[0];
@@ -43,8 +37,10 @@ LMMR2M4MRMLMRMR1M2MRM");
 
             //2b.Define start 'X' and 'Y' coordinates
             //red player
-            int redRow = (y + 1) / 2;   //start red on position "Y"
-            int redCol = (x + 1) / 2;   //start red on position "X"
+            int redRowStartPoint = (y + 1) / 2;
+            int redColStartPoint = (x + 1) / 2;
+            int redRow = redRowStartPoint;   //start red on position "Y"
+            int redCol = redColStartPoint;   //start red on position "X"
             sbyte currRedDirection = 1;  //directions[1] -> R = "Right
 
             //blue player
@@ -63,31 +59,119 @@ LMMR2M4MRMLMRMR1M2MRM");
             sbyte blueResult = 0;  //default(draw) -> 0 / lost -> -1 / win -> 1
 
             //3.Calculation
+            //3a.Start game
             for (int gameCycle = 0; gameCycle < Math.Max(redMotions.Count, blueMotions.Count); gameCycle++)
             {
                 CatchPlayerMoves(ref redResult, redPlayerInGame, redMotions, ref currRedDirection, ref redIndex, matrix, ref redRow, ref redCol, gameCycle);
 
                 CatchPlayerMoves(ref blueResult, bluePlayerInGame, blueMotions, ref currBlueDirection, ref blueIndex, matrix, ref blueRow, ref blueCol, gameCycle);
             }
+            //3b.Calculate distance
+            int redStartEndDistance = CalculateDistance(matrix, redRowStartPoint, redColStartPoint, redRow, redCol, redResult);
 
             //4.Results
             if (redResult == 0 && blueResult == 0)  //draw
             {
-                Console.WriteLine("DRAW");
+                Console.WriteLine("DRAW" + $"\n{redStartEndDistance}");
             }
             else if (redResult == -1)  //blue win
             {
-                Console.WriteLine("BLUE");
+                Console.WriteLine("BLUE" + $"\n{redStartEndDistance}");
             }
             else if (blueResult == -1)  //red win
             {
-                Console.WriteLine("RED");
+                Console.WriteLine("RED" + $"\n{redStartEndDistance}");
             }
+        }
+
+        private static List<string> assignMoves(string player)
+        {
+            List<string> motions = new List<string>();
+
+            //int integer = 0;
+            string integersAsStr = string.Empty;
+            for (int i = 0; i < player.Length; i++)
+            {
+                if (int.TryParse(player[i].ToString(), out int integer))
+                {
+                    integersAsStr += integer.ToString();
+                }
+                else if (integersAsStr != string.Empty)
+                {
+                    motions.Add(integersAsStr + player[i].ToString());
+                    integersAsStr = string.Empty;
+                }
+                else
+                {
+                    motions.Add(player[i].ToString());
+                }
+            }
+
+            return motions;
+        }
+
+        private static int CalculateDistance(char[,] matrix, int rowStartPoint, int colStartPoint, int row, int col, sbyte playerResult)
+        {
+            //check if red player lost in OUT OF the Grid
+            if (playerResult == -1)  
+            {
+                if (row < 0)
+                {
+                    row = 0;  //correct eventual negative value to prevent "OverFlowException"
+                }
+                else if(row >= matrix.GetLength(0))
+                {
+                    row = matrix.GetLength(0) - 1;  //correct eventual higher value to prevent "OverFlowException"
+                }
+            }
+
+            //Calculation
+            bool endFound = false;
+            bool rowFound = false;
+            bool colFound = false;
+            int distCounter = 1;  //WARNING: May become a problem (a wrong result will be returned), if start and end point are the same.
+
+            while (endFound == false)
+            {
+                if (row < rowStartPoint)
+                {
+                    rowStartPoint--;
+                    distCounter++;
+                }
+                else if (row > rowStartPoint)
+                {
+                    rowStartPoint++;
+                    distCounter++;
+                }
+                else if (row == rowStartPoint)
+                {
+                    rowFound = true;
+                }
+            
+                if (col < colStartPoint)
+                {
+                    colStartPoint--;
+                    distCounter++;
+                }
+                else if (col > colStartPoint)
+                {
+                    colStartPoint++;
+                    distCounter++;
+                }
+                else if (col == colStartPoint)
+                {
+                    colFound = true;
+                }
+
+                if (rowFound == true && colFound == true) endFound = true;
+            }
+
+            return distCounter;
         }
 
         private static void CatchPlayerMoves(ref sbyte playerResult, char playerInGame, List<string> playerMotions, ref sbyte playerDirection, ref short playerIndex, char[,] matrix, ref int row, ref int col, int gameCycle)
         {
-            //Check, if player is out of the Grid, stop.
+            //Check, if player lost & if is out of the Grid, stop.
             bool isPlayerOutOfTheGrid = false;
             if (playerResult == -1 && (row < 0 || row >= matrix.GetLength(0)))
             {
@@ -95,6 +179,11 @@ LMMR2M4MRMLMRMR1M2MRM");
             }
 
             if (isPlayerOutOfTheGrid == true)
+            {
+                return;
+            }
+
+            if (playerResult == -1 && playerInGame == 'B')  //If blue lost, stop.
             {
                 return;
             }
@@ -252,34 +341,11 @@ LMMR2M4MRMLMRMR1M2MRM");
 
             return playerResult;
         }
-
-        private static List<string> assignMoves(string player)
-        {
-            List<string> motions = new List<string>();
-
-            //int integer = 0;
-            string integersAsStr = string.Empty;
-            for (int i = 0; i < player.Length; i++)
-            {
-                if (int.TryParse(player[i].ToString(), out int integer))
-                {
-                    integersAsStr += integer.ToString();
-                }
-                else if (integersAsStr != string.Empty)
-                {
-                    motions.Add(integersAsStr + player[i].ToString());
-                    integersAsStr = string.Empty;
-                }
-                else
-                {
-                    motions.Add(player[i].ToString());
-                }
-            }
-
-            return motions;
-        }
     }
 }
 
-//info: http://my.telerikacademy.com/Forum/Questions/8445/CSharp-Part2-Exam-Evening-Trails-3D
-//use .NET 4.6.1 (C# 6.0)
+//Use .NET 4.6.1 (C# 6.0)
+//LINKS:
+//info in Telerik forum -> http://my.telerikacademy.com/Forum/Questions/8445/CSharp-Part2-Exam-Evening-Trails-3D
+//How to find Manhattan distance and ecuildean distance in big data analytics -> https://www.youtube.com/watch?v=yrzdimXHRDU
+//Manhattan_distance -> https://en.wikipedia.org/wiki/Manhattan_distance
