@@ -15,6 +15,12 @@ namespace _14.sep._2013_Task3_Trails3D
         {   //BGCoder & Conditions: http://bgcoder.com/Contests/95/CSharp-Part-2-2013-2014-14-Sept-2013-Evening
             //video: http://youtu.be/iGzwyi70C2k
 
+//            //tests
+//            var test = new StringReader(@"4 2 4
+//3M1M
+//2M1M1M");
+            //Console.SetIn(test);
+
             //1.input
             short[] X_Y_Z = Console.ReadLine().Split(' ').Select(short.Parse).ToArray();
             short x = X_Y_Z[0];
@@ -48,7 +54,9 @@ namespace _14.sep._2013_Task3_Trails3D
             int blueCol = x + z + redCol; //start blue on position "X"
             sbyte currBlueDirection = 3;   //directions[3] -> L = "Left
 
-            //2c.Define some more parameters
+            //2c.Define some other parameters
+            matrix[redRow, redCol] = 'R';   //first move
+            matrix[blueRow, blueCol] = 'B'; //first move
             char redPlayerInGame = 'R';
             char bluePlayerInGame = 'B';
 
@@ -63,8 +71,16 @@ namespace _14.sep._2013_Task3_Trails3D
             for (int gameCycle = 0; gameCycle < Math.Max(redMotions.Count, blueMotions.Count); gameCycle++)
             {
                 CatchPlayerMoves(ref redResult, redPlayerInGame, redMotions, ref currRedDirection, ref redIndex, matrix, ref redRow, ref redCol, gameCycle);
+                if (redResult == -1)  //Player lost or out of the Grid.
+                {
+                    break;
+                }
 
                 CatchPlayerMoves(ref blueResult, bluePlayerInGame, blueMotions, ref currBlueDirection, ref blueIndex, matrix, ref blueRow, ref blueCol, gameCycle);
+                if (blueResult == -1)  //Player lost or out of the Grid. 
+                {
+                    break;
+                }
             }
             //3b.Calculate distance
             int redStartEndDistance = CalculateDistance(matrix, redRowStartPoint, redColStartPoint, redRow, redCol, redResult);
@@ -101,6 +117,10 @@ namespace _14.sep._2013_Task3_Trails3D
                     motions.Add(integersAsStr + player[i].ToString());
                     integersAsStr = string.Empty;
                 }
+                else if (player[i] == ' ')
+                {
+                    continue;
+                }
                 else
                 {
                     motions.Add(player[i].ToString());
@@ -113,13 +133,13 @@ namespace _14.sep._2013_Task3_Trails3D
         private static int CalculateDistance(char[,] matrix, int rowStartPoint, int colStartPoint, int row, int col, sbyte playerResult)
         {
             //check if red player lost in OUT OF the Grid
-            if (playerResult == -1)  
+            if (playerResult == -1)
             {
                 if (row < 0)
                 {
                     row = 0;  //correct eventual negative value to prevent "OverFlowException"
                 }
-                else if(row >= matrix.GetLength(0))
+                else if (row >= matrix.GetLength(0))
                 {
                     row = matrix.GetLength(0) - 1;  //correct eventual higher value to prevent "OverFlowException"
                 }
@@ -129,7 +149,7 @@ namespace _14.sep._2013_Task3_Trails3D
             bool endFound = false;
             bool rowFound = false;
             bool colFound = false;
-            int distCounter = 1;  //WARNING: May become a problem (a wrong result will be returned), if start and end point are the same.
+            int distCounter = 0;
 
             while (endFound == false)
             {
@@ -147,7 +167,7 @@ namespace _14.sep._2013_Task3_Trails3D
                 {
                     rowFound = true;
                 }
-            
+
                 if (col < colStartPoint)
                 {
                     colStartPoint--;
@@ -171,23 +191,6 @@ namespace _14.sep._2013_Task3_Trails3D
 
         private static void CatchPlayerMoves(ref sbyte playerResult, char playerInGame, List<string> playerMotions, ref sbyte playerDirection, ref short playerIndex, char[,] matrix, ref int row, ref int col, int gameCycle)
         {
-            //Check, if player lost & if is out of the Grid, stop.
-            bool isPlayerOutOfTheGrid = false;
-            if (playerResult == -1 && (row < 0 || row >= matrix.GetLength(0)))
-            {
-                isPlayerOutOfTheGrid = true;
-            }
-
-            if (isPlayerOutOfTheGrid == true)
-            {
-                return;
-            }
-
-            if (playerResult == -1 && playerInGame == 'B')  //If blue lost, stop.
-            {
-                return;
-            }
-
             //Calculation
             for (int motionCycles = playerIndex; motionCycles < playerMotions.Count; motionCycles++, playerIndex++)
             {
@@ -259,10 +262,7 @@ namespace _14.sep._2013_Task3_Trails3D
             //directions: U = "Up", R = "Right", D = "Down", L = "Left"
             if (directions[playerDirection] == 'U')
             {
-                if (!(gameCycle == 0 && (howManyMovesMAX - howManyMoves == 0)))  //skip very first move
-                {
-                    row--;
-                }
+                row--;
 
                 if (row < 0)  //player fall, out of grid
                 {
@@ -274,10 +274,7 @@ namespace _14.sep._2013_Task3_Trails3D
             }
             else if (directions[playerDirection] == 'R')
             {
-                if (!(gameCycle == 0 && (howManyMovesMAX - howManyMoves == 0)))  //skip very first move
-                {
-                    col++;
-                }
+                col++;
 
                 if (col >= matrix.GetLength(1))  //player will move from the last grid to the firs one
                 {
@@ -288,10 +285,7 @@ namespace _14.sep._2013_Task3_Trails3D
             }
             else if (directions[playerDirection] == 'D')
             {
-                if (!(gameCycle == 0 && (howManyMovesMAX - howManyMoves == 0)))  //skip very first move
-                {
-                    row++;
-                }
+                row++;
 
                 if (row >= matrix.GetLength(0))  //player fall, out of grid
                 {
@@ -303,10 +297,7 @@ namespace _14.sep._2013_Task3_Trails3D
             }
             else if (directions[playerDirection] == 'L')
             {
-                if (!(gameCycle == 0 && (howManyMovesMAX - howManyMoves == 0)))  //skip very first move
-                {
-                    col--;
-                }
+                col--;
 
                 if (col < 0)  //player will move from the first grid to the last one
                 {
