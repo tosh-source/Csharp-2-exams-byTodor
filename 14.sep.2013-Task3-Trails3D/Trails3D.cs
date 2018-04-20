@@ -15,10 +15,10 @@ namespace _14.sep._2013_Task3_Trails3D
         {   //BGCoder & Conditions: http://bgcoder.com/Contests/95/CSharp-Part-2-2013-2014-14-Sept-2013-Evening
             //video: http://youtu.be/iGzwyi70C2k
 
-//            //tests
-//            var test = new StringReader(@"4 2 4
-//3M1M
-//2M1M1M");
+//			//tests (WRONG output in test: test.009.in && test.014.in)
+//			var test = new StringReader(@"6 4 6
+//LMLMMMMMMMMMRMMMLMMRMMMRM
+//RMLMMLMRMMMRMMLMMMMMMRMMM");
             //Console.SetIn(test);
 
             //1.input
@@ -71,13 +71,16 @@ namespace _14.sep._2013_Task3_Trails3D
             for (int gameCycle = 0; gameCycle < Math.Max(redMotions.Count, blueMotions.Count); gameCycle++)
             {
                 CatchPlayerMoves(ref redResult, redPlayerInGame, redMotions, ref currRedDirection, ref redIndex, matrix, ref redRow, ref redCol, gameCycle);
-                if (redResult == -1)  //Player lost or out of the Grid.
+ 
+                CatchPlayerMoves(ref blueResult, bluePlayerInGame, blueMotions, ref currBlueDirection, ref blueIndex, matrix, ref blueRow, ref blueCol, gameCycle);
+
+                if (redRow == blueRow && redCol == blueCol)
                 {
+                    redResult = 0;
+                    blueResult = 0;
                     break;
                 }
-
-                CatchPlayerMoves(ref blueResult, bluePlayerInGame, blueMotions, ref currBlueDirection, ref blueIndex, matrix, ref blueRow, ref blueCol, gameCycle);
-                if (blueResult == -1)  //Player lost or out of the Grid. 
+                else if (redResult == -1 || blueResult == -1)  //Players lost or out of the Grid. 
                 {
                     break;
                 }
@@ -86,7 +89,7 @@ namespace _14.sep._2013_Task3_Trails3D
             int redStartEndDistance = CalculateDistance(matrix, redRowStartPoint, redColStartPoint, redRow, redCol, redResult);
 
             //4.Results
-            if (redResult == 0 && blueResult == 0)  //draw
+			if ((redResult == 0 && blueResult == 0) || (redResult == -1 && blueResult == -1))  //draw
             {
                 Console.WriteLine("DRAW" + $"\n{redStartEndDistance}");
             }
