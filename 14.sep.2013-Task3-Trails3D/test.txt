@@ -1,0 +1,9 @@
+test 009
+=========================
+6 4 6
+LMLMMMMMMMMMRMMMLMMRMMMRM
+RMLMMLMRMMMRMMLMMMMMMRMMM
+=========================
+
+
+(WRONG output in test: test.009.in && test.014.in)
